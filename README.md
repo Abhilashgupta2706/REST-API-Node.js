@@ -1,6 +1,6 @@
 # ShoppingApp-Backend
 
-This repository contains my NodeJS practice codes Only Backend. `<br />`
+This repository contains my NodeJS practice codes Only Backend. <br />
 
 Frontend for REST API Basic of this project is available on [CodePen](https://codepen.io/Abhilashgupta2706/pen/VwXrZeJ)
 
