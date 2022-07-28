@@ -1,7 +1,6 @@
 # ShoppingApp-Backend
 
 This repository contains my NodeJS practice codes Only Forntend. <br />
-<!-- Here is the [Frontend Code](https://github.com/Abhilashgupta2706/ShoppingApp-Frontend) <br /> -->
 
 ### About this project
 
