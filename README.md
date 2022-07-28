@@ -2,7 +2,7 @@
 
 This repository contains my NodeJS practice codes Only Backend. `<br />`
 
-Frontend for BASIC of this project is available on [CodePen](https://codepen.io/Abhilashgupta2706/pen/VwXrZeJ)
+Frontend for REST API Basic of this project is available on [CodePen](https://codepen.io/Abhilashgupta2706/pen/VwXrZeJ)
 
 ### About this project
 
