@@ -1,4 +1,4 @@
-# ShoppingApp-Backend
+# REST-API Node.js Project
 
 This repository contains my NodeJS practice codes Only Backend. <br />
 
@@ -6,7 +6,8 @@ Frontend for REST API Basic of this project is available on [CodePen](https://co
 
 ### About this project
 
-I made this project when I started learning NodeJS. I have also used Database like SQL & NoSQL. This is a project from [Udemny Course](https://www.udemy.com/course/nodejs-the-complete-guide/)
+I made this project when I started learning NodeJS. I have also used Database like SQL & NoSQL. This is a project from [Udemny Course](https://www.udemy.com/course/nodejs-the-complete-guide/) <br />
+Shopping App developed earlier in this course is in [this repository](https://github.com/Abhilashgupta2706/ShoppingApp-Node.js.git).
 
 ### Setup & Installtion
 
@@ -21,16 +22,15 @@ npm install
 ```
 
 ### Running The App
-
+For both frontend & backend
 ```bash
 npm start
 ```
 
 ### Viewing The App
-
-Go to `http://localhost:3000/`
+For frontend Go to `http://localhost:3000/` & For backend Go to `http://localhost:8080/`
 
 ## About me
 
-If you want to know more about me, you can visit my [Portfolio Website](https://abhilashgupta.ml/).`</br>`
+If you want to know more about me, you can visit my [Portfolio Website](https://abhilashgupta.ml/).</br>
 If you have any creative ideas & you want to discuss them, please feel free to contact me anytime. I'm always looking for such opportunities
