@@ -3,12 +3,14 @@ console.log('--------------- Concole Cleared ---------------');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const feedRoutes = require('./routes/feed.route');
 
-const app = express();
-const PORT = 8080;
+require('dotenv').config();
 
+const app = express();
+const PORT = process.env.PORT || 8080;
 app
     .use(bodyParser.json());
 
@@ -21,6 +23,16 @@ app
     })
     .use('/feed', feedRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Your app is running on http://localhost:${PORT}`)
-});
+
+
+mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(result => {
+        console.log('Connected to MongoDB Atlas Cloud Server!');
+        app.listen(PORT, () => {
+            console.log(`Your app is now running on http://localhost:${PORT}`)
+        });
+    })
+    .catch(err => {
+        console.log(err)
+    });
