@@ -74,19 +74,8 @@ class Signup extends Component {
       <Auth>
         <form onSubmit={e => this.props.onSignup(e, this.state)}>
           <Input
-            id="email"
-            label="Your E-Mail"
-            type="email"
-            control="input"
-            onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, 'email')}
-            value={this.state.signupForm['email'].value}
-            valid={this.state.signupForm['email'].valid}
-            touched={this.state.signupForm['email'].touched}
-          />
-          <Input
             id="name"
-            label="Your Name"
+            label="Name"
             type="text"
             control="input"
             onChange={this.inputChangeHandler}
@@ -94,6 +83,17 @@ class Signup extends Component {
             value={this.state.signupForm['name'].value}
             valid={this.state.signupForm['name'].valid}
             touched={this.state.signupForm['name'].touched}
+          />
+          <Input
+            id="email"
+            label="E-Mail"
+            type="email"
+            control="input"
+            onChange={this.inputChangeHandler}
+            onBlur={this.inputBlurHandler.bind(this, 'email')}
+            value={this.state.signupForm['email'].value}
+            valid={this.state.signupForm['email'].valid}
+            touched={this.state.signupForm['email'].touched}
           />
           <Input
             id="password"

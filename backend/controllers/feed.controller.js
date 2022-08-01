@@ -1,20 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const { validationResult } = require('express-validator/check');
+
 const Post = require('../models/post.model');
-
-function nextErrorHandler(error, next) {
-    if (!error.statusCode) {
-        error.statusCode = 500;
-    };
-    next(error);
-};
-
-function throwErrorHandler(errorMessage, errorStatusCode) {
-    const error = new Error(errorMessage);
-    error.statusCode = errorStatusCode;
-    throw (error);
-};
+const { nextErrorHandler, throwErrorHandler } = require('../utils/errorHandlers.utils')
 
 exports.getPosts = (req, res, next) => {
     const currentPage = req.query.page || 1;

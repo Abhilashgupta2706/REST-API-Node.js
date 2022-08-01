@@ -12,12 +12,13 @@ import SinglePostPage from './pages/Feed/SinglePost/SinglePost';
 import LoginPage from './pages/Auth/Login';
 import SignupPage from './pages/Auth/Signup';
 import './App.css';
+import { API_ENDPOINT } from './util/apiEndpoint';
 
 class App extends Component {
   state = {
     showBackdrop: false,
     showMobileNav: false,
-    isAuth: true,
+    isAuth: false,
     token: null,
     userId: null,
     authLoading: false,
@@ -59,7 +60,16 @@ class App extends Component {
   loginHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('URL')
+    fetch(`${API_ENDPOINT}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: authData.email,
+        password: authData.password
+      })
+    })
       .then(res => {
         if (res.status === 422) {
           throw new Error('Validation failed.');
@@ -100,7 +110,17 @@ class App extends Component {
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('URL')
+    fetch(`${API_ENDPOINT}/auth/signup`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: authData.signupForm.name.value,
+        email: authData.signupForm.email.value,
+        password: authData.signupForm.password.value
+      })
+    })
       .then(res => {
         if (res.status === 422) {
           throw new Error(

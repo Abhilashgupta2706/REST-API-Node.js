@@ -8,6 +8,7 @@ const path = require('path');
 const multer = require('multer');
 
 const feedRoutes = require('./routes/feed.route');
+const authRoutes = require('./routes/auth.route');
 
 require('dotenv').config();
 
@@ -44,16 +45,18 @@ app
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         next();
     })
-    .use('/feed', feedRoutes);
+    .use('/feed', feedRoutes)
+    .use('/auth', authRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
     const status = error.statusCode || 500;
     const message = error.message;
+    const data = error.data;
 
     res
         .status(status)
-        .json({ message: message });
+        .json({ message: message, data: data });
 
 });
 
