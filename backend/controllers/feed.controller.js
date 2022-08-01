@@ -1,11 +1,13 @@
+const fs = require('fs');
+const path = require('path');
 const { validationResult } = require('express-validator/check');
 const Post = require('../models/post.model');
 
-function nextErrorHandler(error) {
+function nextErrorHandler(error, next) {
     if (!error.statusCode) {
         error.statusCode = 500;
     };
-    next(err);
+    next(error);
 };
 
 function throwErrorHandler(errorMessage, errorStatusCode) {
@@ -25,7 +27,7 @@ exports.getPosts = (req, res, next) => {
                     posts: posts
                 });
         })
-        .catch(err => { nextErrorHandler(err) });
+        .catch(err => { nextErrorHandler(err, next) });
 };
 
 exports.createPost = (req, res, next) => {
@@ -39,8 +41,8 @@ exports.createPost = (req, res, next) => {
 
     const title = req.body.title;
     const content = req.body.content;
-    const imageUrl = req.file.path.replace("\\" ,"/");
-    
+    const imageUrl = req.file.path.replace("\\", "/");
+
     const post = new Post({
         title: title,
         content: content,
@@ -59,7 +61,7 @@ exports.createPost = (req, res, next) => {
                     post: result
                 });
         })
-        .catch(err => { nextErrorHandler(err) });
+        .catch(err => { nextErrorHandler(err, next) });
 };
 
 exports.getPostById = (req, res, next) => {
@@ -79,5 +81,88 @@ exports.getPostById = (req, res, next) => {
                     post: post
                 });
         })
-        .catch(err => { nextErrorHandler(err) });
+        .catch(err => { nextErrorHandler(err, next) });
 };
+
+exports.updatePost = (req, res, next) => {
+    const postId = req.params.postId;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throwErrorHandler('Validation failed, entered data is invalid/incorrect.', 422);
+    };
+
+    const title = req.body.title;
+    const content = req.body.content;
+    var imageUrl = req.body.image;
+
+    if (req.file) {
+        imageUrl = req.file.path;
+    };
+
+    if (!imageUrl) {
+        throwErrorHandler('No file uploaded!', 422);
+    };
+
+    Post
+        .findById(postId)
+        .then(post => {
+            if (!post) {
+                throwErrorHandler('Post not found!', 404)
+            };
+
+            if (imageUrl !== post.imageUrl) {
+                clearImage(post.imageUrl);
+            };
+
+            post.title = title;
+            post.content = content
+            post.imageUrl = imageUrl;
+            return post.save();
+        })
+        .then(result => {
+            res
+                .status(200)
+                .json({
+                    message: 'Post updated',
+                    post: result
+                });
+        })
+        .catch(err => { nextErrorHandler(err, next) });
+};
+
+exports.deletePost = (req, res, next) => {
+    const postId = req.params.postId;
+
+    Post
+        .findById(postId)
+        .then(post => {
+            if (!post) {
+                throwErrorHandler('Post not found!', 404)
+            };
+
+            // TODO: Check Logged in user
+
+            clearImage(post.imageUrl);
+
+            return Post
+                .findByIdAndRemove(postId)
+                .then(result => {
+                    console.log(result);
+
+                    res
+                        .status(200)
+                        .json({
+                            message: 'Post Deleted',
+                            post: post
+                        });
+                });
+        })
+
+        .catch(err => { nextErrorHandler(err, next) });
+};
+
+const clearImage = filePath => {
+    filePath = path.join(__dirname, '..', filePath);
+    fs.unlink(filePath, err => console.log(err));
+};  
