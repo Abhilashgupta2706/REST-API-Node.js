@@ -57,14 +57,14 @@ exports.login = (req, res, next) => {
             if (!passMatched) {
                 throwErrorHandler('Invalid Password!', 401);
             };
-            
+
             const token = jwt.sign({
                 email: loadedUser.email,
                 userId: loadedUser._id.toString()
             }, 'ThisIsSomeSuperSecretKeyForLogginAuthenticationInPostsApp', { expiresIn: '1h' });
-            
+
             console.log('User LoggedIn => ', loadedUser);
-            
+
             res
                 .status(200)
                 .json({
@@ -72,6 +72,46 @@ exports.login = (req, res, next) => {
                     userId: loadedUser._id.toString()
                 });
 
+        })
+        .catch(err => { nextErrorHandler(err, next) });
+};
+
+exports.updateUserStatus = (req, res, next) => {
+    const newStatus = req.body.status;
+
+    User
+        .findById(req.userId)
+        .then(user => {
+            if (!user) {
+                throwErrorHandler('User not found! Please try again.', 404);
+            };
+
+            user.status = newStatus;
+            return user.save();
+        })
+        .then(result => {
+            res
+                .status(200)
+                .json({
+                    message: "User's status updated."
+                });
+        })
+        .catch(err => { nextErrorHandler(err, next) });
+};
+
+exports.getUserStatus = (req, res, next) => {
+    User
+        .findById(req.userId)
+        .then(user => {
+            if (!user) {
+                throwErrorHandler('User not found! Please try again.', 404);
+            };
+
+            res
+                .status(200)
+                .json({
+                    status: user.status,
+                });
         })
         .catch(err => { nextErrorHandler(err, next) });
 };
