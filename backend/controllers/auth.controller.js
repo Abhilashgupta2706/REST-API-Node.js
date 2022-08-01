@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user.model');
-const { nextErrorHandler, throwErrorHandler, throwErrorHandlerAuth } = require('../utils/errorHandlers');
+const { nextErrorHandler, throwErrorHandler, throwErrorHandlerAuth } = require('../utils/errorHandlers.middleware');
 
 
 exports.signup = async (req, res, next) => {

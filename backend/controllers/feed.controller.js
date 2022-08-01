@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator/check');
 
 const Post = require('../models/post.model');
 const User = require('../models/user.model');
-const { nextErrorHandler, throwErrorHandler } = require('../utils/errorHandlers')
+const { nextErrorHandler, throwErrorHandler } = require('../utils/errorHandlers.middleware')
 
 exports.getPosts = async (req, res, next) => {
     const currentPage = req.query.page || 1;
